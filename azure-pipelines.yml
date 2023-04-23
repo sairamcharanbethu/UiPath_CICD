@@ -9,10 +9,15 @@ trigger:
 pool: default
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+- task: UiPathPack@3
+  inputs:
+    versionType: 'CurrentVersion'
+    projectJsonPath: 'project1_dev/project.json'
+    outputType: 'Process'
+    orchestratorConnection: 'UiPath Dev'
+    outputPath: '$(Build.ArtifactStagingDirectory)\Output'
+- task: UiPathDeploy@3
+  inputs:
+    orchestratorConnection: 'UiPath Dev'
+    packagesPath: '$(Build.ArtifactStagingDirectory)\Output'
+    folderName: 'Test'
