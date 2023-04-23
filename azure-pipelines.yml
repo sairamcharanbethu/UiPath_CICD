@@ -4,7 +4,9 @@
 # https://aka.ms/yaml
 
 trigger:
-- project1_dev
+  branches:
+    include:
+      - project*_dev
 
 pool: default
 
